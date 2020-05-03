@@ -164,7 +164,6 @@ void MapView::updateTilesGBA(bool force) {
 		CoreController::Interrupter interrupter(m_controller);
 		int bitmap = -1;
 		int priority = -1;
-		int frame = 0;
 		QString offset(tr("N/A"));
 		QString transform(tr("N/A"));
 #ifdef M_CORE_GBA
@@ -174,7 +173,7 @@ void MapView::updateTilesGBA(bool force) {
 			if (m_map == 2 && mode > 2) {
 				bitmap = mode == 4 ? 1 : 0;
 				if (mode != 3) {
-					frame = GBARegisterDISPCNTGetFrameSelect(io[REG_DISPCNT >> 1]);
+					int frame = GBARegisterDISPCNTGetFrameSelect(io[REG_DISPCNT >> 1]);
 				}
 			}
 			priority = GBARegisterBGCNTGetPriority(io[(REG_BG0CNT >> 1) + m_map]);
@@ -213,6 +212,7 @@ void MapView::updateTilesGBA(bool force) {
 			mBitmapCache* bitmapCache = mBitmapCacheSetGetPointer(&m_cacheSet->bitmaps, bitmap);
 			int width = mBitmapCacheSystemInfoGetWidth(bitmapCache->sysConfig);
 			int height = mBitmapCacheSystemInfoGetHeight(bitmapCache->sysConfig);
+			int frame = 0;
 			m_ui.bgInfo->setCustomProperty("screenBase", QString("0x%1").arg(m_addressBase + bitmapCache->bitsStart[frame], 8, 16, QChar('0')));
 			m_ui.bgInfo->setCustomProperty("charBase", tr("N/A"));
 			m_ui.bgInfo->setCustomProperty("size", QString("%1×%2").arg(width).arg(height));

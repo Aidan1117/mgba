@@ -65,7 +65,7 @@ MemoryView::MemoryView(std::shared_ptr<CoreController> controller, QWidget* pare
 void MemoryView::setIndex(int index) {
 	mCore* core = m_controller->thread()->core;
 	const mCoreMemoryBlock* blocks;
-	size_t nBlocks = core->listMemoryBlocks(core, &blocks);
+	//size_t nBlocks = core->listMemoryBlocks(core, &blocks);
 	const mCoreMemoryBlock& info = blocks[index];
 
 	m_region = qMakePair(info.start, info.end);
